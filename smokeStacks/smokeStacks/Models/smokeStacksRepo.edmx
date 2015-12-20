@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="smokeStacksModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PrivateRoomMembership">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="RoomID" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="RoomID" />
+          </Key>
+          <Property Name="RoomID" Type="int" Nullable="false" />
+          <Property Name="RoomName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="150" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_PrivateRoomMembership_Rooms">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="0..1" />
+          <End Role="PrivateRoomMembership" Type="Self.PrivateRoomMembership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="RoomID" />
+            </Principal>
+            <Dependent Role="PrivateRoomMembership">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrivateRoomMembership_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="PrivateRoomMembership" Type="Self.PrivateRoomMembership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PrivateRoomMembership">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="smokeStacksModelStoreContainer">
+          <EntitySet Name="PrivateRoomMembership" EntityType="Self.PrivateRoomMembership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PrivateRoomMembership_Rooms" Association="Self.FK_PrivateRoomMembership_Rooms">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="PrivateRoomMembership" EntitySet="PrivateRoomMembership" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrivateRoomMembership_Users" Association="Self.FK_PrivateRoomMembership_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PrivateRoomMembership" EntitySet="PrivateRoomMembership" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="smokeStacksModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="RoomID" />
+          </Key>
+          <Property Name="RoomID" Type="Int32" Nullable="false" />
+          <Property Name="RoomName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PrivateRoomMemberships" Relationship="smokeStacksModel.FK_PrivateRoomMembership_Rooms" FromRole="Room" ToRole="PrivateRoomMembership" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PrivateRoomMemberships" Relationship="smokeStacksModel.FK_PrivateRoomMembership_Users" FromRole="User" ToRole="PrivateRoomMembership" />
+        </EntityType>
+        <EntityContainer Name="smokeStacksEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Rooms" EntityType="Self.Room" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="PrivateRoomMemberships" EntityType="smokeStacksModel.PrivateRoomMembership" />
+          <AssociationSet Name="FK_PrivateRoomMembership_Rooms" Association="smokeStacksModel.FK_PrivateRoomMembership_Rooms">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="PrivateRoomMembership" EntitySet="PrivateRoomMemberships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrivateRoomMembership_Users" Association="smokeStacksModel.FK_PrivateRoomMembership_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PrivateRoomMembership" EntitySet="PrivateRoomMemberships" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="PrivateRoomMembership">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="RoomID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Room" Relationship="smokeStacksModel.FK_PrivateRoomMembership_Rooms" FromRole="PrivateRoomMembership" ToRole="Room" />
+          <NavigationProperty Name="User" Relationship="smokeStacksModel.FK_PrivateRoomMembership_Users" FromRole="PrivateRoomMembership" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_PrivateRoomMembership_Rooms">
+          <End Type="smokeStacksModel.Room" Role="Room" Multiplicity="0..1" />
+          <End Type="smokeStacksModel.PrivateRoomMembership" Role="PrivateRoomMembership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="RoomID" />
+            </Principal>
+            <Dependent Role="PrivateRoomMembership">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrivateRoomMembership_Users">
+          <End Type="smokeStacksModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="smokeStacksModel.PrivateRoomMembership" Role="PrivateRoomMembership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PrivateRoomMembership">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="smokeStacksModelStoreContainer" CdmEntityContainer="smokeStacksEntities1">
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="smokeStacksModel.Room">
+              <MappingFragment StoreEntitySet="Rooms">
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="RoomName" ColumnName="RoomName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="smokeStacksModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrivateRoomMemberships">
+            <EntityTypeMapping TypeName="smokeStacksModel.PrivateRoomMembership">
+              <MappingFragment StoreEntitySet="PrivateRoomMembership">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
