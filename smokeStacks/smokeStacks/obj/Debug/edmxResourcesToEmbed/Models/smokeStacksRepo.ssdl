@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="smokeStacksModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="PrivateRoomMembership">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="RoomID" Type="int" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rooms">
+    <Key>
+      <PropertyRef Name="RoomID" />
+    </Key>
+    <Property Name="RoomID" Type="int" Nullable="false" />
+    <Property Name="RoomName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_PrivateRoomMembership_Rooms">
+    <End Role="Rooms" Type="Self.Rooms" Multiplicity="0..1" />
+    <End Role="PrivateRoomMembership" Type="Self.PrivateRoomMembership" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rooms">
+        <PropertyRef Name="RoomID" />
+      </Principal>
+      <Dependent Role="PrivateRoomMembership">
+        <PropertyRef Name="RoomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PrivateRoomMembership_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="PrivateRoomMembership" Type="Self.PrivateRoomMembership" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="PrivateRoomMembership">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="smokeStacksModelStoreContainer">
+    <EntitySet Name="PrivateRoomMembership" EntityType="Self.PrivateRoomMembership" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_PrivateRoomMembership_Rooms" Association="Self.FK_PrivateRoomMembership_Rooms">
+      <End Role="Rooms" EntitySet="Rooms" />
+      <End Role="PrivateRoomMembership" EntitySet="PrivateRoomMembership" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PrivateRoomMembership_Users" Association="Self.FK_PrivateRoomMembership_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="PrivateRoomMembership" EntitySet="PrivateRoomMembership" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
