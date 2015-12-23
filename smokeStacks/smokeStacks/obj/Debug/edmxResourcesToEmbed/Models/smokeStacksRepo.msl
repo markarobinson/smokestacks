@@ -4,6 +4,9 @@
     <EntitySetMapping Name="Rooms">
       <EntityTypeMapping TypeName="smokeStacksModel.Room">
         <MappingFragment StoreEntitySet="Rooms">
+          <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="RoomPassword" ColumnName="RoomPassword" />
           <ScalarProperty Name="RoomID" ColumnName="RoomID" />
           <ScalarProperty Name="RoomName" ColumnName="RoomName" />
         </MappingFragment>

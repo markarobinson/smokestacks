@@ -18,6 +18,7 @@ namespace smokeStacks.Models
         public User()
         {
             this.PrivateRoomMemberships = new HashSet<PrivateRoomMembership>();
+            this.Rooms = new HashSet<Room>();
         }
     
         public int UserID { get; set; }
@@ -28,5 +29,7 @@ namespace smokeStacks.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrivateRoomMembership> PrivateRoomMemberships { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

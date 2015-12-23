@@ -5,10 +5,10 @@ namespace smokeStacks
 {
     public class ChatHub : Hub
     {
-        public void Send(string name, string message)
+        public void Send(string name, string message, string room)
         {
             // Call the addNewMessageToPage method to update clients.
-            Clients.All.addNewMessageToPage(name, message);
+            Clients.All.addNewMessageToPage(name, message, room);
         }
     }
 }

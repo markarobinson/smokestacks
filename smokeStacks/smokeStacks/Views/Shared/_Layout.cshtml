@@ -23,8 +23,8 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Create Room", "Chat", "Home")</li>
-                    <li>@Html.ActionLink("Join Room", "Chat", "Home")</li>
+                    <li>@Html.ActionLink("Create Room", "Create", "Rooms")</li>
+                    <li>@Html.ActionLink("Join Room", "Index", "Rooms")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -40,6 +40,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/Sound.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

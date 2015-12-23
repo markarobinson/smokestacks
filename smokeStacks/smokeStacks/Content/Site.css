@@ -45,3 +45,10 @@ textarea {
     max-width:none;
     height:27px;
 }
+#userList{
+    height:400px;
+    background-color:#e6e6e6;
+    color:black;
+    width:20%;
+
+}

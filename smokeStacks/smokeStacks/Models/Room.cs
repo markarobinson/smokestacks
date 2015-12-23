@@ -11,6 +11,8 @@ namespace smokeStacks.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Room
     {
@@ -21,9 +23,18 @@ namespace smokeStacks.Models
         }
     
         public int RoomID { get; set; }
+        [DisplayName("Name")]
+        [Required] 
         public string RoomName { get; set; }
+        [DisplayName("Password")]
+        [DataType(DataType.Password)]
+        public string RoomPassword { get; set; }
+        [Required] 
+        public string Description { get; set; }
+        public Nullable<int> CreatorID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrivateRoomMembership> PrivateRoomMemberships { get; set; }
+        public virtual User User { get; set; }
     }
 }

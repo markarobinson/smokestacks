@@ -7,6 +7,10 @@
     <Property Name="RoomID" Type="Int32" Nullable="false" />
     <Property Name="RoomName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="PrivateRoomMemberships" Relationship="smokeStacksModel.FK_PrivateRoomMembership_Rooms" FromRole="Room" ToRole="PrivateRoomMembership" />
+    <Property Name="RoomPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CreatorID" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="smokeStacksModel.FK_Rooms_Users" FromRole="Room" ToRole="User" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -18,6 +22,7 @@
     <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="PrivateRoomMemberships" Relationship="smokeStacksModel.FK_PrivateRoomMembership_Users" FromRole="User" ToRole="PrivateRoomMembership" />
+    <NavigationProperty Name="Rooms" Relationship="smokeStacksModel.FK_Rooms_Users" FromRole="User" ToRole="Room" />
   </EntityType>
   <EntityContainer Name="smokeStacksEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Rooms" EntityType="Self.Room" />
@@ -30,6 +35,10 @@
     <AssociationSet Name="FK_PrivateRoomMembership_Users" Association="smokeStacksModel.FK_PrivateRoomMembership_Users">
       <End Role="User" EntitySet="Users" />
       <End Role="PrivateRoomMembership" EntitySet="PrivateRoomMemberships" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rooms_Users" Association="smokeStacksModel.FK_Rooms_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Room" EntitySet="Rooms" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="PrivateRoomMembership">
@@ -63,6 +72,18 @@
       </Principal>
       <Dependent Role="PrivateRoomMembership">
         <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rooms_Users">
+    <End Type="smokeStacksModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="smokeStacksModel.Room" Role="Room" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Room">
+        <PropertyRef Name="CreatorID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

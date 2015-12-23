@@ -29,6 +29,7 @@ namespace smokeStacks.Controllers
 
         public ActionResult Chat()
         {
+
             return View();
         }
     }
