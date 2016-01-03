@@ -15,10 +15,10 @@ namespace smokeStacks.Models
     public partial class PrivateRoomMembership
     {
         public Nullable<int> RoomID { get; set; }
-        public Nullable<int> UserID { get; set; }
+        public string UserID { get; set; }
         public int ID { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual Room Room { get; set; }
-        public virtual User User { get; set; }
     }
 }

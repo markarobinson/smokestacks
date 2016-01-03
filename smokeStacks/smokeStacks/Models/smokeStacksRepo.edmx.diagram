@@ -4,13 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="dd2334319c4246d7bd2d888606be6ee6" Name="Diagram1">
-        <EntityTypeShape EntityType="smokeStacksModel.Room" Width="1.5" PointX="1.375" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="smokeStacksModel.User" Width="1.5" PointX="6.5" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="smokeStacksModel.PrivateRoomMembership" Width="1.5" PointX="4.25" PointY="0.5" />
-        <AssociationConnector Association="smokeStacksModel.FK_PrivateRoomMembership_Rooms" />
+      <Diagram DiagramId="dd2334319c4246d7bd2d888606be6ee6" Name="Diagram1" ZoomLevel="66">
+        <EntityTypeShape EntityType="smokeStacksModel.AspNetRole" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="smokeStacksModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="14.125" />
+        <EntityTypeShape EntityType="smokeStacksModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="16.875" />
+        <EntityTypeShape EntityType="smokeStacksModel.AspNetUser" Width="1.5" PointX="3" PointY="6.125" />
+        <EntityTypeShape EntityType="smokeStacksModel.MessageLog" Width="1.5" PointX="10.5" PointY="8.375" />
+        <EntityTypeShape EntityType="smokeStacksModel.PrivateRoomMembership" Width="1.5" PointX="7.5" PointY="8.75" />
+        <EntityTypeShape EntityType="smokeStacksModel.Room" Width="1.5" PointX="5.25" PointY="10.875" />
+        <EntityTypeShape EntityType="smokeStacksModel.User" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="smokeStacksModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="smokeStacksModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="smokeStacksModel.FK_MessageLog_MessageLog1" />
         <AssociationConnector Association="smokeStacksModel.FK_PrivateRoomMembership_Users" />
-        <AssociationConnector Association="smokeStacksModel.FK_Rooms_Users" />
+        <AssociationConnector Association="smokeStacksModel.FK_Rooms_AspNetUsers" />
+        <AssociationConnector Association="smokeStacksModel.FK_MessageLog_MessageLog" />
+        <AssociationConnector Association="smokeStacksModel.FK_MessageLog_MessageLog2" />
+        <AssociationConnector Association="smokeStacksModel.FK_PrivateRoomMembership_Rooms" />
+        <AssociationConnector Association="smokeStacksModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

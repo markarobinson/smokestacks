@@ -1,17 +1,39 @@
-﻿@{
+﻿@model smokeStacks.Models.ContactModel
+@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
-
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<h1>How to contact us:</h1>
+<a href="mailto:me@home.com">Contact me at</a>
+<h2>OR</h2>
+@Html.AntiForgeryToken()
+@Html.ValidationSummary("", new { @class = "text-danger" })
+@using (Html.BeginForm("Send", "Contact", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+<table class="table">
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.Name)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.Name)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.Email)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.Email)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.Message)
+        </td>
+        <td>
+            @Html.TextAreaFor(model => model.Message)
+        </td>
+    </tr>
+</table>
+    <input type="submit" class="btn btn-default" value="Register" />
+}

@@ -25,8 +25,13 @@ namespace smokeStacks.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<MessageLog> MessageLogs { get; set; }
+        public virtual DbSet<PrivateRoomMembership> PrivateRoomMemberships { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<PrivateRoomMembership> PrivateRoomMemberships { get; set; }
     }
 }

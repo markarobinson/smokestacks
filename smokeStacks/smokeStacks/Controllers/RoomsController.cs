@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using smokeStacks.Models;
+using Microsoft.AspNet.Identity;
 
 namespace smokeStacks.Views
 {
@@ -46,10 +47,11 @@ namespace smokeStacks.Views
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RoomID,RoomName,RoomPassword,Description")] Room room)
+        public ActionResult Create([Bind(Include = "RoomID,RoomName,RoomPassword,Description,CreatorID")] Room room)
         {
             if (ModelState.IsValid)
             {
+                room.CreatorID = User.Identity.GetUserId();
                 db.Rooms.Add(room);
                 db.SaveChanges();
                 return RedirectToAction("Index");

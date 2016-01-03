@@ -12,25 +12,18 @@ namespace smokeStacks.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Room
+    public partial class AspNetRole
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Room()
+        public AspNetRole()
         {
-            this.MessageLogs = new HashSet<MessageLog>();
-            this.PrivateRoomMemberships = new HashSet<PrivateRoomMembership>();
+            this.AspNetUsers = new HashSet<AspNetUser>();
         }
     
-        public string RoomName { get; set; }
-        public string RoomPassword { get; set; }
-        public int RoomID { get; set; }
-        public string Description { get; set; }
-        public string CreatorID { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MessageLog> MessageLogs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrivateRoomMembership> PrivateRoomMemberships { get; set; }
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }

@@ -16,8 +16,9 @@ namespace smokeStacks
         public void Configuration(IAppBuilder app)
         {
             // Any connection or hub wire up and configuration should go here
-            app.MapSignalR();
+            
             ConfigureAuth(app);
+            app.MapSignalR();
         }
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)

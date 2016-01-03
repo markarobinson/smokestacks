@@ -24,6 +24,8 @@ namespace smokeStacks.Controllers
             {
                 return HttpNotFound();
             }
+
+            
             return View(room);
         }
     }

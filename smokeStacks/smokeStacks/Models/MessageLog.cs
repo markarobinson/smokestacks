@@ -12,12 +12,17 @@ namespace smokeStacks.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class MessageLog
     {
-        public string UserID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string Message { get; set; }
+        public Nullable<int> RoomID { get; set; }
+        public int MessageID { get; set; }
+        public string CreatorID { get; set; }
+        public Nullable<System.DateTime> Recived { get; set; }
+    
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Room Room { get; set; }
+        public virtual MessageLog MessageLog1 { get; set; }
+        public virtual MessageLog MessageLog2 { get; set; }
     }
 }

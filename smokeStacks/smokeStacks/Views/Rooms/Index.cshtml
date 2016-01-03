@@ -28,6 +28,10 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
+
+                    <button type="button" onclick="" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Join</button>
+
+               
                 @Html.ActionLink("Join", "EnterRoom", "Chat", new { id = item.RoomID }, null) |
                 @Html.ActionLink("Edit", "Edit", new { id = item.RoomID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.RoomID })

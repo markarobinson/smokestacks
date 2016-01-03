@@ -8,7 +8,19 @@
 <div class="container-fluid">
     <div class="row">
         <div id="chatWindow" class="col-md-4">
-            <ul id="discussion"></ul>
+            <ul id="discussion">
+                @foreach (var item in Model.MessageLogs.Take(50).OrderBy(item => item.Recived))
+                {
+                    <li>
+                            @Html.DisplayFor(modelItem => item.Recived) 
+                            <strong>
+                            @Html.DisplayFor(modelItem => item.AspNetUser.FirstName) 
+                            @Html.DisplayFor(modelItem => item.AspNetUser.LastName)               
+                            </strong>
+                            @Html.DisplayFor(modelItem => item.Message)
+                    </li>
+                }
+            </ul>
         </div>
 
         <div id="userList" class="col-md-4">
@@ -23,6 +35,7 @@
             <input type="hidden" id="displayname" />
         </div>
 </div>
+
 
 
 
@@ -57,7 +70,7 @@
         };
 
         // Get the user name and store it to prepend to messages.
-        $('#displayname').val(prompt('Enter your name:', ''));
+       // $('#displayname').val(prompt('Enter your name:', ''));
         // Set initial focus to message input box.
         $('#message').focus();
         // Start the connection.
@@ -65,7 +78,7 @@
             $('#sendmessage').click(function () {
                 // Call the Send method on the hub.
                 if ($('#message').val()) {
-                    chat.server.send($('#displayname').val(), $('#message').val(), "@Model.RoomID");
+                    chat.server.send($('').val(), $('#message').val(), "@Model.RoomID");
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                 }
