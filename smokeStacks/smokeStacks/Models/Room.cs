@@ -11,6 +11,7 @@ namespace smokeStacks.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class Room
     {
@@ -20,8 +21,11 @@ namespace smokeStacks.Models
             this.MessageLogs = new HashSet<MessageLog>();
             this.PrivateRoomMemberships = new HashSet<PrivateRoomMembership>();
         }
-    
+
+        [DisplayName("Room Name")]
         public string RoomName { get; set; }
+
+        [DisplayName("Password")]
         public string RoomPassword { get; set; }
         public int RoomID { get; set; }
         public string Description { get; set; }
