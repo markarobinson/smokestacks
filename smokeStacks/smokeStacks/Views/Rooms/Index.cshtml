@@ -6,7 +6,6 @@
 
 <h2>Lobby</h2>
 
-
 <table class="table table-hover">
     <tr>
         <th>
@@ -21,25 +20,25 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            <td class="col-md-4">
                 @Html.DisplayFor(modelItem => item.RoomName)
             </td>
-            <td>
+            <td class="col-md-4">
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
-                <div class="container">
-
-                    @if (item.RoomPassword != null) {
-                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">JoinRoom</button>
+            <td class="col-md-4">
+                <div class="btn-group">
+                    @if (item.RoomPassword != null)
+                    {
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDIV_@Html.Raw(item.RoomID)">Enter Room</button>
                     }
                     else
                     {
-                        <button type="button" class="btn btn-info btn-lg">Join Room</button>
+                        @Html.ActionLink("Enter Room", "EnterRoom", "Chat", new { id = item.RoomID }, new { @class = "btn btn-primary" })
                     }
         
                     <!-- Modal -->
-                    <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal fade" id="modalDIV_@Html.Raw(item.RoomID)" role="dialog">
                         <div class="modal-dialog">
                             <!-- Modal content-->
                             <div class="modal-content">
@@ -49,24 +48,38 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    <p>Please enter a password for this room.</p>
-                                    @Html.LabelFor(modelItem => item.RoomPassword)
-                                    @Html.TextBoxFor(modelItem => item.RoomPassword)
-                                    <input type="submit" class="btn btn-info btn-lg" value="Join Room" />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    @using (Html.BeginForm("EnterRoom", "Chat", new { id = item.RoomID }, FormMethod.Post, new { @class = "form-inline", role = "form" }))
+                                    {
+                                        @Html.Hidden("roomID", @item.RoomID)
+                                        <p>Please enter a password for @item.RoomName</p>
+                                        <div class="form-group">
+                                            <div class="col-sm-4 form-control">
+                                                @Html.PasswordFor(modelItem => item.RoomPassword, new {autofocus = "autofocus"})
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <input type="submit" class="btn btn-primary" value="Join Room" />
+                                            </div>
+                                        </div>
+
+                                    }
                                 </div>
                             </div>
 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
-               
-                @Html.ActionLink("Join", "EnterRoom", "Chat", new { id = item.RoomID }, null) |
-                @Html.ActionLink("Edit", "Edit", new { id = item.RoomID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.RoomID })
+                    </div>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RoomID }, new { @class = "btn btn-info" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.RoomID }, new { @class = "btn btn-danger" })
+                    </div>
+                    
+
+                
+
             </td>
         </tr>
     }

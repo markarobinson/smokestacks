@@ -1,6 +1,6 @@
 ﻿@model smokeStacks.Models.Room
 @{
-    ViewBag.Title = "Chat";
+    ViewBag.Title = "Chat HuB In Progress";
 }
 
 <h2>@Html.DisplayFor(model => model.RoomName)
@@ -9,15 +9,20 @@
     <div class="row">
         <div id="chatWindow" class="col-md-4">
             <ul id="discussion">
-                @foreach (var item in Model.MessageLogs.Take(50).OrderBy(item => item.Recived))
+                @foreach (var item in Model.MessageLogs.OrderByDescending(item => item.Recived).Take(50).Reverse())
                 {
                     <li>
-                            @Html.DisplayFor(modelItem => item.Recived) 
-                            <strong>
-                            @Html.DisplayFor(modelItem => item.AspNetUser.FirstName) 
-                            @Html.DisplayFor(modelItem => item.AspNetUser.LastName)               
-                            </strong>
-                            @Html.DisplayFor(modelItem => item.Message)
+                        @{
+                        DateTime UniversalScheduleDate = DateTime.SpecifyKind(
+                        DateTime.Parse(item.Recived.Value.ToString()),DateTimeKind.Utc);
+
+                        string formattedDate = UniversalScheduleDate.ToLocalTime().ToString("HH:mm tt");
+                        }
+                         @formattedDate
+                        <strong>
+                            @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+                        </strong>
+                        @Html.DisplayFor(modelItem => item.Message)
                     </li>
                 }
             </ul>
@@ -25,15 +30,21 @@
 
         <div id="userList" class="col-md-4">
             <strong>Users:</strong>
+            <ul>
+                    @foreach (var item in Model.PrivateRoomMemberships)
+                    {
+                        <li><strong>@item.AspNetUser.UserName</strong></li>
+                    }
+            </ul>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-8"></div>
         <input type="text" id="message" spellcheck="true" />
-            <input type="button" id="sendmessage" value="Send" />
-            <input type="hidden" id="displayname" />
-        </div>
+        <input type="button" id="sendmessage" value="Send" />
+        <input type="hidden" id="displayname" />
+    </div>
 </div>
 
 
@@ -50,6 +61,11 @@
     <script src="~/signalr/hubs"></script>
     <!--SignalR script to update the chat page and send messages.-->
     <script>
+
+
+
+
+
     $(function () {
         // Reference the auto-generated proxy for the hub.
         var chat = $.connection.chatHub;
@@ -57,24 +73,38 @@
         // Create a function that the hub can call back to display messages.
         chat.client.addNewMessageToPage = function (name, message, room) {
             // Add the message to the page.
-
-            if (room == "@Model.RoomID") {
-
-                $('#discussion').append('<li>' + currentTime.getHours() + ':' + currentTime.getMinutes() + ':' + currentTime.getSeconds() + ' <strong>' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
-                $("#chatWindow").scrollTop($("#chatWindow")[0].scrollHeight);
-
-
-            }
+            var getAMPM = (currentTime.getHours() > 12) ? 'PM' : 'AM';
+            $('#discussion').append('<li>' + currentTime.getHours() + ':' + currentTime.getMinutes() + ' ' + getAMPM + ' ' + ' <strong>' + htmlEncode(name)
+              + '</strong>: ' + htmlEncode(message) + '</li>');
+            $("#chatWindow").scrollTop($("#chatWindow")[0].scrollHeight);
 
         };
 
+        chat.client.updateUserList = function (name) {
+            // Add the message to the page.
+            $('#userList ul').append('<li>'+ '<strong>' + htmlEncode(name) + '</strong> ' +'</li>');
+        };
+
+        chat.client.updateUserListOffline = function (name) {
+            // Add the message to the page.
+            $("#userList ul li:contains('" + htmlEncode(name) + "')").remove();
+        };
+
+
+
+
         // Get the user name and store it to prepend to messages.
-       // $('#displayname').val(prompt('Enter your name:', ''));
+        // $('#displayname').val(prompt('Enter your name:', ''));
         // Set initial focus to message input box.
         $('#message').focus();
         // Start the connection.
         $.connection.hub.start().done(function () {
+            //adding user to group.
+            chat.server.joinRoom(@Model.RoomID);
+            chat.server.setOnlineMemeber(@Model.RoomID);
+
+            (function () { $("#chatWindow").scrollTop($("#chatWindow")[0].scrollHeight); })();
+
             $('#sendmessage').click(function () {
                 // Call the Send method on the hub.
                 if ($('#message').val()) {
@@ -82,7 +112,8 @@
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                 }
-                else {
+                else
+                {
                     return;
                 }
             });
@@ -94,24 +125,38 @@
                         // Clear text box and reset focus for next comment.
                         $('#message').val('').focus();
                     }
-                    else {
+                    else
+                    {
                         return;
                     }
                 }
             });
 
         });
+
+
     });
+    $(window).on('unload', function () {
+        return Leave();
+    });
+
     // This optional function html-encodes messages for display in the page.
     function htmlEncode(value) {
         var encodedValue = $('<div />').text(value).html();
         return encodedValue;
+
+    }
+    function Leave() {
+        $.connection.chatHub.server.leaveRoom(@Model.RoomID);
+        $.connection.chatHub.server.setOfflineMemeber(@Model.RoomID);
     }
 
     var currentTime = new Date();
+    //currentTime.format("hh:mm TT");
 
     function updateTime() {
         currentTime = new Date();
+        //currentTime.format("hh:mm TT");
     }
     setInterval(updateTime, 1000);
 </script>

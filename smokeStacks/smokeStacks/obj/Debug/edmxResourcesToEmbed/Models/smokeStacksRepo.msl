@@ -31,6 +31,7 @@
     <EntitySetMapping Name="AspNetUsers">
       <EntityTypeMapping TypeName="smokeStacksModel.AspNetUser">
         <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="LastActivity" ColumnName="LastActivity" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -62,6 +63,7 @@
     <EntitySetMapping Name="PrivateRoomMemberships">
       <EntityTypeMapping TypeName="smokeStacksModel.PrivateRoomMembership">
         <MappingFragment StoreEntitySet="PrivateRoomMembership">
+          <ScalarProperty Name="connectionID" ColumnName="connectionID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="RoomID" ColumnName="RoomID" />

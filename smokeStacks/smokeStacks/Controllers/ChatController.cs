@@ -25,6 +25,13 @@ namespace smokeStacks.Controllers
                 return HttpNotFound();
             }
 
+            if (room.RoomPassword != null)
+            {
+                string reqPassword = Convert.ToString(Request["item.roomPassword"].ToString());
+                if (room.RoomPassword != reqPassword)
+                    return View("NoAccess");
+
+            }
             
             return View(room);
         }

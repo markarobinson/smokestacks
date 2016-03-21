@@ -54,7 +54,6 @@ C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\bin\Mic
 C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\obj\Debug\smokeStacks.csprojResolveAssemblyReference.cache
 C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\obj\Debug\smokeStacks.dll
 C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\obj\Debug\smokeStacks.pdb
 C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\obj\Debug\smokeStacks.Migrations.InitialCreate.resources

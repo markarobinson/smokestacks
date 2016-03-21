@@ -52,6 +52,7 @@
     <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="LastName" Type="nvarchar(max)" />
     <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="LastActivity" Type="datetime" />
   </EntityType>
   <EntityType Name="MessageLog">
     <Key>
@@ -61,7 +62,7 @@
     <Property Name="RoomID" Type="int" />
     <Property Name="MessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CreatorID" Type="nvarchar" MaxLength="128" />
-    <Property Name="Recived" Type="date" />
+    <Property Name="Recived" Type="datetime" />
   </EntityType>
   <EntityType Name="PrivateRoomMembership">
     <Key>
@@ -69,7 +70,8 @@
     </Key>
     <Property Name="RoomID" Type="int" />
     <Property Name="UserID" Type="nvarchar" MaxLength="128" />
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="connectionID" Type="nvarchar" MaxLength="128" />
   </EntityType>
   <EntityType Name="Rooms">
     <Key>
@@ -91,6 +93,18 @@
     <Property Name="Email" Type="varchar" MaxLength="150" Nullable="false" />
     <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <Association Name="FK_AspNetUsers_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="AspNetUsers1" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUsers1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -183,19 +197,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PrivateRoomMembership_Rooms">
-    <End Role="Rooms" Type="Self.Rooms" Multiplicity="0..1" />
-    <End Role="PrivateRoomMembership" Type="Self.PrivateRoomMembership" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Rooms">
-        <PropertyRef Name="RoomID" />
-      </Principal>
-      <Dependent Role="PrivateRoomMembership">
-        <PropertyRef Name="RoomID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PrivateRoomMembership_Users">
+  <Association Name="FK_PrivateRoomMembership_AspNetUsers">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
     <End Role="PrivateRoomMembership" Type="Self.PrivateRoomMembership" Multiplicity="*" />
     <ReferentialConstraint>
@@ -204,6 +206,18 @@
       </Principal>
       <Dependent Role="PrivateRoomMembership">
         <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PrivateRoomMembership_Rooms1">
+    <End Role="Rooms" Type="Self.Rooms" Multiplicity="0..1" />
+    <End Role="PrivateRoomMembership" Type="Self.PrivateRoomMembership" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rooms">
+        <PropertyRef Name="RoomID" />
+      </Principal>
+      <Dependent Role="PrivateRoomMembership">
+        <PropertyRef Name="RoomID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -229,6 +243,10 @@
     <EntitySet Name="PrivateRoomMembership" EntityType="Self.PrivateRoomMembership" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AspNetUsers_AspNetUsers" Association="Self.FK_AspNetUsers_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUsers1" EntitySet="AspNetUsers" />
+    </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -257,12 +275,12 @@
       <End Role="MessageLog" EntitySet="MessageLog" />
       <End Role="MessageLog1" EntitySet="MessageLog" />
     </AssociationSet>
-    <AssociationSet Name="FK_PrivateRoomMembership_Rooms" Association="Self.FK_PrivateRoomMembership_Rooms">
-      <End Role="Rooms" EntitySet="Rooms" />
+    <AssociationSet Name="FK_PrivateRoomMembership_AspNetUsers" Association="Self.FK_PrivateRoomMembership_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="PrivateRoomMembership" EntitySet="PrivateRoomMembership" />
     </AssociationSet>
-    <AssociationSet Name="FK_PrivateRoomMembership_Users" Association="Self.FK_PrivateRoomMembership_Users">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    <AssociationSet Name="FK_PrivateRoomMembership_Rooms1" Association="Self.FK_PrivateRoomMembership_Rooms1">
+      <End Role="Rooms" EntitySet="Rooms" />
       <End Role="PrivateRoomMembership" EntitySet="PrivateRoomMembership" />
     </AssociationSet>
     <AssociationSet Name="FK_Rooms_AspNetUsers" Association="Self.FK_Rooms_AspNetUsers">

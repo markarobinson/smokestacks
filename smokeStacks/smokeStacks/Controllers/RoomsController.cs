@@ -72,7 +72,11 @@ namespace smokeStacks.Views
             {
                 return HttpNotFound();
             }
-            return View(room);
+            string currentUserId = User.Identity.GetUserId();
+            if(room.CreatorID == currentUserId)
+                return View(room);
+            else
+                return View("NoAccess");
         }
 
         // POST: Rooms/Edit/5
@@ -125,5 +129,7 @@ namespace smokeStacks.Views
             }
             base.Dispose(disposing);
         }
+
+        
     }
 }
