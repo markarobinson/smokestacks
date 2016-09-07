@@ -60,3 +60,4 @@ C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\obj\Deb
 C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\obj\Debug\smokeStacks.csproj.GenerateResource.Cache
 C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\obj\Debug\smokeStacks.Migrations.FirstName.resources
 C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\obj\Debug\smokeStacks.Migrations.LastName.resources
+C:\Users\marobinson\Documents\GitHub\smokestacks\smokeStacks\smokeStacks\obj\Debug\smokeStacks.csprojResolveAssemblyReference.cache
